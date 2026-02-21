@@ -22,28 +22,27 @@ jumpBtn.addEventListener("click", () => {
 
 function animateJump() {
 
-    let jumpSequence = [0,1,2,3,4,3,2,1,0];
+    let sequence = [0,1,2,3,4,3,2,1,0];
     let i = 0;
 
     let interval = setInterval(() => {
-        currentFrame = jumpSequence[i];
+        currentFrame = sequence[i];
         character.style.backgroundPosition = `-${currentFrame * frameWidth}px 0px`;
         i++;
 
-        if (i >= jumpSequence.length) {
+        if (i >= sequence.length) {
             clearInterval(interval);
             moveToNextPole();
             isJumping = false;
         }
-
-    }, 60);
+    }, 70);
 }
 
 function moveToNextPole() {
     currentPole++;
 
     let polePosition = poles[currentPole].offsetLeft;
-    character.style.left = polePosition - 50 + "px";
+    character.style.left = polePosition - 35 + "px";
 
     checkPole();
 }
@@ -52,27 +51,19 @@ function checkPole() {
     let pole = poles[currentPole];
 
     if (pole.classList.contains("heart")) {
-        if (!pole.classList.contains("collected")) {
-            pole.classList.add("collected");
-            pole.style.setProperty("--content", "''");
-            pole.style.background = "#8B5A2B";
-            pole.classList.remove("heart");
+        pole.classList.remove("heart");
+        uiHearts[heartsCollected].classList.add("filled");
+        heartsCollected++;
+        showMessage("Heart Collected ❤️");
 
-            uiHearts[heartsCollected].classList.add("filled");
-            heartsCollected++;
-            showMessage("Heart Collected ❤️");
-
-            if (heartsCollected === 3) {
-                showMessage("All Hearts Collected 💖");
-            }
+        if (heartsCollected === 3) {
+            showMessage("All Hearts Collected 💖");
         }
     }
 
     if (pole.classList.contains("ring")) {
         showMessage("Level Complete 🎉");
-        setTimeout(() => {
-            window.location.href = "level2.html";
-        }, 2000);
+        // Redirect removed to avoid error
     }
 }
 
