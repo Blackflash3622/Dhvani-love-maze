@@ -1,13 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Love Maze Game</title>
+<meta charset="UTF-8">
+<title>Love Jump Level 1</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<canvas id="gameCanvas"></canvas>
+<div class="game-container">
+
+    <div class="top-hearts">
+        <img src="heart.png" class="ui-heart">
+        <img src="heart.png" class="ui-heart">
+        <img src="heart.png" class="ui-heart">
+    </div>
+
+    <div id="messageBox" class="message-bubble"></div>
+
+    <div class="poles">
+        <div class="pole"></div>
+        <div class="pole"></div>
+        <div class="pole heart"></div>
+        <div class="pole"></div>
+        <div class="pole heart"></div>
+        <div class="pole"></div>
+        <div class="pole heart"></div>
+        <div class="pole ring"></div>
+    </div>
+
+    <div id="character"></div>
+
+</div>
+
+<div class="controls">
+    <button id="jumpBtn">JUMP 🦘</button>
+</div>
 
 <script src="script.js"></script>
 </body>
