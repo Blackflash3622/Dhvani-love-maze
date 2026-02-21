@@ -8,23 +8,19 @@ let player = {
   x: canvas.width / 2,
   y: canvas.height / 2,
   radius: 20,
-  speed: 5
+  speed: 4
 };
 
 let targetX = player.x;
 let targetY = player.y;
 
-let hearts = [];
 let heartsCollected = 0;
 
-for (let i = 0; i < 3; i++) {
-  hearts.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    radius: 15,
-    collected: false
-  });
-}
+let hearts = [
+  { x: 100, y: 150, radius: 15, collected: false },
+  { x: 300, y: 300, radius: 15, collected: false },
+  { x: 200, y: 500, radius: 15, collected: false }
+];
 
 canvas.addEventListener("touchstart", function(e) {
   const touch = e.touches[0];
@@ -38,11 +34,11 @@ canvas.addEventListener("touchmove", function(e) {
   targetY = touch.clientY;
 });
 
-function checkCollision(obj1, obj2) {
-  let dx = obj1.x - obj2.x;
-  let dy = obj1.y - obj2.y;
+function checkCollision(a, b) {
+  let dx = a.x - b.x;
+  let dy = a.y - b.y;
   let distance = Math.sqrt(dx * dx + dy * dy);
-  return distance < obj1.radius + obj2.radius;
+  return distance < a.radius + b.radius;
 }
 
 function update() {
@@ -66,7 +62,7 @@ function update() {
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw hearts
+  // Draw Hearts
   hearts.forEach(heart => {
     if (!heart.collected) {
       ctx.fillStyle = "red";
@@ -76,21 +72,20 @@ function draw() {
     }
   });
 
-  // Draw player
+  // Draw Player
   ctx.fillStyle = "pink";
   ctx.beginPath();
   ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
   ctx.fill();
 
-  // Draw counter
+  // Draw Counter
   ctx.fillStyle = "white";
   ctx.font = "20px Arial";
   ctx.fillText("Hearts: " + heartsCollected + " / 3", 20, 30);
 
   if (heartsCollected === 3) {
-    ctx.fillStyle = "white";
     ctx.font = "30px Arial";
-    ctx.fillText("All love collected 💖", canvas.width / 2 - 120, canvas.height / 2);
+    ctx.fillText("All Love Collected 💖", canvas.width / 2 - 140, canvas.height / 2);
   }
 }
 
