@@ -6,122 +6,202 @@ canvas.height = window.innerHeight;
 
 let gameState = "level1";
 
-// Background image
 const bgImage = new Image();
 bgImage.src = "levelonebg.jpg";
 
-// Fence positions (6 dande)
-let fencePositions = [];
 let fenceCount = 6;
-let fenceY = canvas.height * 0.55;
+let fencePositions = [];
 
-for (let i = 0; i < fenceCount; i++) {
-  fencePositions.push({
-    x: canvas.width * 0.15 + i * (canvas.width * 0.12),
-    reward: null,
-    collected: false
-  });
-}
-
-// Rewards
-fencePositions[1].reward = "❤️";
-fencePositions[2].reward = "❤️";
-fencePositions[3].reward = "❤️";
-fencePositions[4].reward = "💍";
-fencePositions[5].reward = "😘";
-
-// Player
-let playerIndex = 0;
-
-// Jump button
-let jumpBtn = {
-  x: canvas.width - 120,
-  y: canvas.height - 120,
-  size: 80
+let imageDrawData = {
+  x: 0,
+  y: 0,
+  width: 0,
+  height: 0
 };
 
-canvas.addEventListener("touchstart", (e) => {
-  const t = e.touches[0];
+function setupFences() {
+  fencePositions = [];
+  let spacing = imageDrawData.width / (fenceCount + 1);
 
-  if (
-    t.clientX > jumpBtn.x &&
-    t.clientX < jumpBtn.x + jumpBtn.size &&
-    t.clientY > jumpBtn.y &&
-    t.clientY < jumpBtn.y + jumpBtn.size
-  ) {
-    jumpForward();
+  for (let i = 0; i < fenceCount; i++) {
+    fencePositions.push({
+      x: imageDrawData.x + spacing * (i + 1),
+      reward: null,
+      collected: false
+    });
+  }
+
+  fencePositions[1].reward = "❤️";
+  fencePositions[2].reward = "❤️";
+  fencePositions[3].reward = "❤️";
+  fencePositions[4].reward = "💍";
+  fencePositions[5].reward = "😘";
+}
+
+let playerIndex = 0;
+let playerY = 0;
+
+let jumping = false;
+let jumpStartX = 0;
+let jumpEndX = 0;
+let jumpProgress = 0;
+
+let popupMessage = "";
+let popupTimer = 0;
+
+canvas.addEventListener("touchstart", (e) => {
+  let t = e.touches[0];
+
+  if (t.clientX > canvas.width - 130 && t.clientY > canvas.height - 130) {
+    startJump();
   }
 });
 
-function jumpForward() {
-  if (playerIndex < fenceCount - 1) {
-    playerIndex++;
+function startJump() {
+  if (jumping) return;
+  if (playerIndex >= fenceCount - 1) return;
 
-    let currentFence = fencePositions[playerIndex];
-    if (currentFence.reward && !currentFence.collected) {
-      currentFence.collected = true;
+  jumping = true;
+  jumpStartX = fencePositions[playerIndex].x;
+  playerIndex++;
+  jumpEndX = fencePositions[playerIndex].x;
+  jumpProgress = 0;
+}
+
+function updateJump() {
+  if (!jumping) return;
+
+  jumpProgress += 0.04;
+
+  if (jumpProgress >= 1) {
+    jumping = false;
+    playerY = getFenceY();
+    handleReward();
+  }
+}
+
+function handleReward() {
+  let fence = fencePositions[playerIndex];
+
+  if (fence.reward && !fence.collected) {
+    fence.collected = true;
+
+    if (fence.reward === "💍") {
+      popupMessage = "Thank you, my Queen, for guiding me to our ring 💍";
+      popupTimer = 120;
     }
-  } else {
+
+    if (fence.reward === "😘") {
+      popupMessage = "Muuuaaahhh 💋";
+      popupTimer = 120;
+    }
+  }
+
+  if (playerIndex === fenceCount - 1) {
     gameState = "win";
   }
 }
 
+function getFenceY() {
+  return imageDrawData.y + imageDrawData.height * 0.60;
+}
+
 function drawBackground() {
-  if (bgImage.complete) {
-    ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
-  }
+  let ratio = Math.min(
+    canvas.width / bgImage.width,
+    canvas.height / bgImage.height
+  );
+
+  let newWidth = bgImage.width * ratio;
+  let newHeight = bgImage.height * ratio;
+
+  let x = (canvas.width - newWidth) / 2;
+  let y = (canvas.height - newHeight) / 2;
+
+  imageDrawData = { x, y, width: newWidth, height: newHeight };
+
+  ctx.drawImage(bgImage, x, y, newWidth, newHeight);
 }
 
 function drawRewards() {
+  let time = Date.now() * 0.005;
   ctx.font = "35px Arial";
 
-  fencePositions.forEach((f, index) => {
+  fencePositions.forEach((f, i) => {
     if (f.reward && !f.collected) {
-      ctx.fillText(f.reward, f.x - 15, fenceY - 40);
+      let pulse = Math.sin(time + i) * 5;
+      ctx.fillText(f.reward, f.x - 15, getFenceY() - 40 + pulse);
     }
   });
 }
 
 function drawPlayer() {
   ctx.font = "40px Arial";
+
   let x = fencePositions[playerIndex].x;
-  ctx.fillText("🫅🏼", x - 18, fenceY);
+  let y = getFenceY();
+
+  if (jumping) {
+    let t = jumpProgress;
+    x = jumpStartX + (jumpEndX - jumpStartX) * t;
+
+    // Arc jump (Ulta U)
+    let height = 120;
+    y = getFenceY() - Math.sin(t * Math.PI) * height;
+  }
+
+  ctx.fillText("🫅🏼", x - 18, y);
 }
 
 function drawJumpButton() {
   ctx.fillStyle = "#ff69b4";
-  ctx.fillRect(jumpBtn.x, jumpBtn.y, jumpBtn.size, jumpBtn.size);
+  ctx.beginPath();
+  ctx.arc(canvas.width - 80, canvas.height - 80, 50, 0, Math.PI * 2);
+  ctx.fill();
 
   ctx.font = "30px Arial";
   ctx.fillStyle = "white";
-  ctx.fillText("🦘", jumpBtn.x + 20, jumpBtn.y + 50);
+  ctx.fillText("🦘", canvas.width - 95, canvas.height - 65);
 }
 
-function drawLevel1() {
-  drawBackground();
-  drawRewards();
-  drawPlayer();
-  drawJumpButton();
+function drawPopup() {
+  if (popupTimer > 0) {
+    ctx.fillStyle = "rgba(0,0,0,0.6)";
+    ctx.fillRect(0, 0, canvas.width, 100);
 
-  ctx.fillStyle = "white";
-  ctx.font = "22px Arial";
-  ctx.fillText("Jump to collect love & reach your Queen 👰🏻‍♀️", 20, 40);
+    ctx.fillStyle = "white";
+    ctx.font = "22px Arial";
+    ctx.fillText(popupMessage, 20, 60);
+
+    popupTimer--;
+  }
 }
 
 function drawWin() {
   ctx.fillStyle = "pink";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  ctx.font = "40px Arial";
   ctx.fillStyle = "white";
+  ctx.font = "40px Arial";
   ctx.fillText("You reached your Queen 👰🏻‍♀️💖", canvas.width/2 - 220, canvas.height/2);
 }
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  if (!bgImage.complete) {
+    requestAnimationFrame(gameLoop);
+    return;
+  }
+
   if (gameState === "level1") {
-    drawLevel1();
+    drawBackground();
+    setupFences();
+    updateJump();
+    drawRewards();
+    drawPlayer();
+    drawJumpButton();
+    drawPopup();
   }
 
   if (gameState === "win") {
