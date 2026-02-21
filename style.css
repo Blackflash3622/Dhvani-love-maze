@@ -7,23 +7,24 @@ body {
 .game-container {
     position: relative;
     width: 100%;
-    height: 75vh;
+    height: 60vh;
     background: url("Level1bg.jpg") no-repeat center;
     background-size: contain;
     overflow: hidden;
 }
 
+/* POLES */
 .poles {
     position: absolute;
-    bottom: 110px;
+    bottom: 20px;
     width: 100%;
     display: flex;
     justify-content: space-around;
 }
 
 .pole {
-    width: 20px;
-    height: 120px;
+    width: 18px;
+    height: 90px;
     background: #8B5A2B;
     border-radius: 10px;
     position: relative;
@@ -32,29 +33,31 @@ body {
 .pole.heart::after {
     content: "❤️";
     position: absolute;
-    top: -40px;
-    left: -12px;
-    font-size: 30px;
+    top: -35px;
+    left: -10px;
+    font-size: 24px;
 }
 
 .pole.ring::after {
     content: "💍";
     position: absolute;
-    top: -40px;
-    left: -12px;
-    font-size: 30px;
+    top: -35px;
+    left: -10px;
+    font-size: 24px;
 }
 
+/* CHARACTER FIX */
 #character {
     position: absolute;
-    bottom: 230px;
-    left: 40px;
-    width: 128.6px;
-    height: 388px;
+    bottom: 110px;
+    left: 20px;
+    width: 90px;      /* scaled down */
+    height: 150px;    /* scaled down */
     background: url("king.png") no-repeat;
     background-size: 643px 388px;
 }
 
+/* UI HEARTS */
 .top-hearts {
     position: absolute;
     top: 10px;
@@ -62,7 +65,7 @@ body {
 }
 
 .ui-heart {
-    width: 30px;
+    width: 28px;
     opacity: 0.3;
 }
 
@@ -70,8 +73,9 @@ body {
     opacity: 1 !important;
 }
 
+/* CONTROLS */
 .controls {
-    height: 25vh;
+    height: 40vh;
     background: black;
     display: flex;
     justify-content: center;
@@ -80,7 +84,7 @@ body {
 
 #jumpBtn {
     padding: 15px 40px;
-    font-size: 20px;
+    font-size: 18px;
     background: hotpink;
     border: none;
     border-radius: 20px;
@@ -88,14 +92,15 @@ body {
     cursor: pointer;
 }
 
+/* MESSAGE */
 .message-bubble {
     position: absolute;
-    top: 70px;
+    top: 50px;
     left: 50%;
     transform: translateX(-50%);
     background: white;
-    padding: 15px 25px;
-    border-radius: 25px;
+    padding: 12px 20px;
+    border-radius: 20px;
     display: none;
     font-weight: bold;
     box-shadow: 0 0 15px pink;
