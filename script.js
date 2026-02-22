@@ -1,36 +1,39 @@
 let character = document.getElementById("character");
-let sticks = document.querySelectorAll(".stick");
 let jumpBtn = document.getElementById("jumpBtn");
 
-let currentStick = 0;
+let hearts = document.querySelectorAll(".heart");
+let ring = document.querySelector(".ring");
+
+let positions = [20, 100, 180, 260, 330, 410, 480, 560, 600];
+let step = 0;
 
 jumpBtn.addEventListener("click", function(){
 
-    if(currentStick >= sticks.length-1){
-        return;
-    }
+    if(step >= positions.length-1) return;
 
-    currentStick++;
+    step++;
 
-    let targetStick = sticks[currentStick];
+    character.classList.add("jump");
 
-    let leftPos = targetStick.offsetLeft;
+    setTimeout(()=>{
+        character.classList.remove("jump");
+        character.style.left = positions[step] + "px";
 
-    character.style.left = leftPos - 20 + "px";
+        // Heart collect
+        hearts.forEach(h=>{
+            if(Math.abs(h.offsetLeft - character.offsetLeft) < 20){
+                h.style.display = "none";
+            }
+        });
 
-    // Collect heart
-    let heart = targetStick.querySelector(".heart");
-    if(heart){
-        heart.style.display = "none";
-    }
+        // Ring collect
+        if(Math.abs(ring.offsetLeft - character.offsetLeft) < 20){
+            ring.style.display = "none";
+            setTimeout(()=>{
+                alert("Level 1 Complete ❤️");
+            },300);
+        }
 
-    // Collect ring and finish
-    let ring = targetStick.querySelector(".ring");
-    if(ring){
-        ring.style.display = "none";
-        setTimeout(function(){
-            alert("Level 1 Complete ❤️");
-        },400);
-    }
+    },200);
 
 });
