@@ -1,65 +1,71 @@
 body{
     margin:0;
     background:black;
-    text-align:center;
-    overflow:hidden;
+    display:flex;
+    justify-content:center;
 }
 
 .game{
+    position:relative;
     width:643px;
     height:388px;
-    margin:auto;
-    position:relative;
     overflow:hidden;
 }
 
 .bg{
     width:100%;
-    position:absolute;
-    top:0;
-    left:0;
+    height:100%;
+    object-fit:cover;
 }
 
-.platforms{
-    position:absolute;
-    bottom:20px;
-    width:100%;
-    display:flex;
-    justify-content:space-between;
-    padding:0 10px;
-}
-
-.stick{
-    width:20px;
-    height:100px;
-    background:#8B5A2B;
-    border-radius:10px;
-    position:relative;
-}
-
-.heart,.ring{
-    width:30px;
-    position:absolute;
-    top:-35px;
-    left:-5px;
-}
-
+/* Character */
 #character{
-    width:80px;
     position:absolute;
-    bottom:100px;
-    left:10px;
+    width:80px;
+    bottom:40px;
+    left:20px;
     transition:0.4s;
 }
 
+/* Jump Animation */
+.jump{
+    animation:jumpAnim 0.4s ease;
+}
+
+@keyframes jumpAnim{
+    0%{ bottom:40px; }
+    50%{ bottom:120px; }
+    100%{ bottom:40px; }
+}
+
+/* Hearts */
+.heart{
+    width:30px;
+    position:absolute;
+    bottom:120px;
+}
+
+.h1{ left:180px; }
+.h2{ left:330px; }
+.h3{ left:480px; }
+
+/* Ring */
+.ring{
+    width:30px;
+    position:absolute;
+    bottom:120px;
+    left:600px;
+}
+
+/* Button */
 #jumpBtn{
     position:absolute;
     bottom:10px;
     left:50%;
     transform:translateX(-50%);
-    padding:10px 25px;
-    background:pink;
+    padding:8px 25px;
     border:none;
     border-radius:20px;
+    background:pink;
     font-weight:bold;
 }
