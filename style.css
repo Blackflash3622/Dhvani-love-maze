@@ -1,107 +1,65 @@
-body {
-    margin: 0;
-    background: black;
-    font-family: Arial;
+body{
+    margin:0;
+    background:black;
+    text-align:center;
+    overflow:hidden;
 }
 
-.game-container {
-    position: relative;
-    width: 100%;
-    height: 60vh;
-    background: url("Level1bg.jpg") no-repeat center;
-    background-size: contain;
-    overflow: hidden;
+.game{
+    width:643px;
+    height:388px;
+    margin:auto;
+    position:relative;
+    overflow:hidden;
 }
 
-/* POLES */
-.poles {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
+.bg{
+    width:100%;
+    position:absolute;
+    top:0;
+    left:0;
 }
 
-.pole {
-    width: 18px;
-    height: 90px;
-    background: #8B5A2B;
-    border-radius: 10px;
-    position: relative;
+.platforms{
+    position:absolute;
+    bottom:20px;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    padding:0 10px;
 }
 
-.pole.heart::after {
-    content: "❤️";
-    position: absolute;
-    top: -35px;
-    left: -10px;
-    font-size: 24px;
+.stick{
+    width:20px;
+    height:100px;
+    background:#8B5A2B;
+    border-radius:10px;
+    position:relative;
 }
 
-.pole.ring::after {
-    content: "💍";
-    position: absolute;
-    top: -35px;
-    left: -10px;
-    font-size: 24px;
+.heart,.ring{
+    width:30px;
+    position:absolute;
+    top:-35px;
+    left:-5px;
 }
 
-/* CHARACTER FIX */
-#character {
-    position: absolute;
-    bottom: 110px;
-    left: 20px;
-    width: 90px;      /* scaled down */
-    height: 150px;    /* scaled down */
-    background: url("king.png") no-repeat;
-    background-size: 643px 388px;
+#character{
+    width:80px;
+    position:absolute;
+    bottom:100px;
+    left:10px;
+    transition:0.4s;
 }
 
-/* UI HEARTS */
-.top-hearts {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-}
-
-.ui-heart {
-    width: 28px;
-    opacity: 0.3;
-}
-
-.filled {
-    opacity: 1 !important;
-}
-
-/* CONTROLS */
-.controls {
-    height: 40vh;
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#jumpBtn {
-    padding: 15px 40px;
-    font-size: 18px;
-    background: hotpink;
-    border: none;
-    border-radius: 20px;
-    color: white;
-    cursor: pointer;
-}
-
-/* MESSAGE */
-.message-bubble {
-    position: absolute;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    padding: 12px 20px;
-    border-radius: 20px;
-    display: none;
-    font-weight: bold;
-    box-shadow: 0 0 15px pink;
+#jumpBtn{
+    position:absolute;
+    bottom:10px;
+    left:50%;
+    transform:translateX(-50%);
+    padding:10px 25px;
+    background:pink;
+    border:none;
+    border-radius:20px;
+    font-weight:bold;
 }
