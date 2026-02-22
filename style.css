@@ -15,49 +15,68 @@ body{
 .bg{
     width:100%;
     height:100%;
-    object-fit:cover;
+    position:absolute;
 }
 
-/* Character */
+/* ===== CHARACTER SPRITE ===== */
+
 #character{
     position:absolute;
-    width:80px;
-    bottom:40px;
-    left:20px;
-    transition:0.4s;
+    bottom:60px;
+    left:10px;
+
+    width:128px;   /* 643 / 5 ≈ 128 */
+    height:180px;
+
+    background:url("King.png") no-repeat;
+    background-size:640px 180px; /* full sprite size */
+
 }
 
-/* Jump Animation */
+/* Sprite animation */
+.animate{
+    animation:run 0.5s steps(5) forwards;
+}
+
+@keyframes run{
+    from{ background-position:0 0; }
+    to{ background-position:-640px 0; }
+}
+
+/* Jump movement */
 .jump{
-    animation:jumpAnim 0.4s ease;
+    animation:jumpMove 0.5s ease;
 }
 
-@keyframes jumpAnim{
-    0%{ bottom:40px; }
-    50%{ bottom:120px; }
-    100%{ bottom:40px; }
+@keyframes jumpMove{
+    0%{ bottom:60px; }
+    50%{ bottom:150px; }
+    100%{ bottom:60px; }
 }
 
-/* Hearts */
+/* ===== HEARTS aligned to fence ===== */
+
 .heart{
     width:30px;
     position:absolute;
-    bottom:120px;
+    bottom:150px;
 }
 
-.h1{ left:180px; }
-.h2{ left:330px; }
-.h3{ left:480px; }
+.h1{ left:190px; }
+.h2{ left:350px; }
+.h3{ left:510px; }
 
-/* Ring */
+/* ===== RING ===== */
+
 .ring{
     width:30px;
     position:absolute;
-    bottom:120px;
-    left:600px;
+    bottom:150px;
+    left:590px;
 }
 
 /* Button */
+
 #jumpBtn{
     position:absolute;
     bottom:10px;
@@ -67,5 +86,4 @@ body{
     border:none;
     border-radius:20px;
     background:pink;
-    font-weight:bold;
 }
