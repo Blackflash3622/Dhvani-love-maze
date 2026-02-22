@@ -1,39 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Love Jump Level 1</title>
-<link rel="stylesheet" href="style.css">
+    <title>Level 1</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="game-container">
+<div class="game">
 
-    <div class="top-hearts">
-        <img src="heart.png" class="ui-heart">
-        <img src="heart.png" class="ui-heart">
-        <img src="heart.png" class="ui-heart">
+    <img src="Level1bg.jpg" class="bg">
+
+    <div class="platforms">
+        <div class="stick"></div>
+        <div class="stick"></div>
+        <div class="stick heart-stick"><img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" class="heart"></div>
+        <div class="stick"></div>
+        <div class="stick heart-stick"><img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" class="heart"></div>
+        <div class="stick"></div>
+        <div class="stick heart-stick"><img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" class="heart"></div>
+        <div class="stick ring-stick"><img src="https://cdn-icons-png.flaticon.com/512/616/616494.png" class="ring"></div>
     </div>
 
-    <div id="messageBox" class="message-bubble"></div>
+    <img src="King.png" id="character">
 
-    <div class="poles">
-        <div class="pole"></div>
-        <div class="pole"></div>
-        <div class="pole heart"></div>
-        <div class="pole"></div>
-        <div class="pole heart"></div>
-        <div class="pole"></div>
-        <div class="pole heart"></div>
-        <div class="pole ring"></div>
-    </div>
+    <button id="jumpBtn">JUMP</button>
 
-    <div id="character"></div>
-
-</div>
-
-<div class="controls">
-    <button id="jumpBtn">JUMP 🦘</button>
 </div>
 
 <script src="script.js"></script>
